@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("category")
+@RequestMapping("api/category")
 @RequiredArgsConstructor  // delegando ao Spring a responsabilidade de criar o construtor
 public class CategoryController {
 
