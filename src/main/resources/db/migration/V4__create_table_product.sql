@@ -7,6 +7,11 @@ CREATE TABLE product(
   feature1 VARCHAR(200) NULL,
   feature2 VARCHAR(200) NULL,
   feature3 VARCHAR(200) NULL,
+  created_on TIMESTAMP NULL,
+  created_by VARCHAR(50) NULL,
+  modified_on TIMESTAMP NULL,
+  modified_by VARCHAR(50) NULL,
+
 
 CONSTRAINT fk_product_brand FOREIGN KEY (brand_id)
   REFERENCES brand(id)
