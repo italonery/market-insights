@@ -26,11 +26,6 @@ public class CategoryController {
                 .map(CategoryMapper::toCategoryResponse)
                 .toList();
         return ResponseEntity.ok(categories);
-//        List<Category> categories = categoryService.findAll();
-//        List<CategoryResponse> response = categories.stream()
-//                .map(category -> CategoryMapper.toCategoryResponse(category))
-//                .toList();
-//        return ResponseEntity.ok(response);
     }
 
     @PostMapping
@@ -49,7 +44,11 @@ public class CategoryController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteByCategoryId(@PathVariable Long id) {
-        categoryService.deleteCategory(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        Category category = categoryService.findById(id).orElse(null);
+        if (category != null) {
+            categoryService.deleteCategory(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
