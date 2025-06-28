@@ -14,19 +14,23 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    public List<Category> findAll() {
-        return categoryRepository.findAll();
+    public Category save(Category category) {
+        return categoryRepository.save(category);
     }
 
-    public Category saveCategory(Category category) {
-        return categoryRepository.save(category);
+    public List<Category> saveAll(List<Category> categories) {
+        return categoryRepository.saveAll(categories);
+    }
+
+    public List<Category> findAll() {
+        return categoryRepository.findAll();
     }
 
     public Optional<Category> findById(Long id) {
         return categoryRepository.findById(id);
     }
 
-    public void deleteCategory(Long id) {
+    public void delete(Long id) {
         categoryRepository.deleteById(id);
     }
 }

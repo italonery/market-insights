@@ -14,19 +14,19 @@ public class BrandService {
 
     private final BrandRepository brandRepository;
 
-    public List<Brand> findAll() {
-        return brandRepository.findAll();
+    public Brand save(Brand brand) {
+        return brandRepository.save(brand);
     }
 
-    public Brand saveBrand(Brand brand) {
-        return brandRepository.save(brand);
+    public List<Brand> findAll() {
+        return brandRepository.findAll();
     }
 
     public Optional<Brand> findById(Long id) {
         return brandRepository.findById(id);
     }
 
-    public void deleteBrand(Long id) {
+    public void delete(Long id) {
         brandRepository.deleteById(id);
     }
 }

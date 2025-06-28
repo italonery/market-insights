@@ -14,19 +14,19 @@ public class MarketplaceService {
 
     private final MarktplaceRepository marktplaceRepository;
 
-    public List<Marketplace> findAll() {
-        return marktplaceRepository.findAll();
+    public Marketplace save(Marketplace marketplace) {
+        return marktplaceRepository.save(marketplace);
     }
 
-    public Marketplace saveMarketplace(Marketplace marketplace) {
-        return marktplaceRepository.save(marketplace);
+    public List<Marketplace> findAll() {
+        return marktplaceRepository.findAll();
     }
 
     public Optional<Marketplace> findById(Long id) {
         return marktplaceRepository.findById(id);
     }
 
-    public void deleteMarketplace(Long id) {
+    public void delete(Long id) {
         marktplaceRepository.deleteById(id);
     }
 }

@@ -24,6 +24,17 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    public List<Product> saveAll(List<Product> products) {
+        List<Product> validatedProducts = products.stream()
+                .map(product -> {
+                    product.setBrand(this.findBrand(product.getBrand()));
+                    product.setCategory(this.findCategory(product.getCategory()));
+                    return product;
+                })
+                .toList();
+        return productRepository.saveAll(validatedProducts);
+    }
+
     public List<Product> findAll() {
         return productRepository.findAll();
     }
@@ -66,6 +77,10 @@ public class ProductService {
             return Optional.of(product);
         }
         return Optional.empty();
+    }
+
+    public void delete(Long id) {
+        productRepository.deleteById(id);
     }
 
     private Brand findBrand(Brand brand) {
