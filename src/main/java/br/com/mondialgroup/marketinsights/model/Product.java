@@ -1,17 +1,20 @@
 package br.com.mondialgroup.marketinsights.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "product")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -47,11 +50,21 @@ public class Product {
     @Column(name = "feature3", length = 200)
     private String feature3;
 
-    @CreationTimestamp
+//    @CreationTimestamp
+    @CreatedDate
     @Column(name = "created_on")
     private LocalDateTime createdOn;
 
-    @UpdateTimestamp
+    @CreatedBy
+    @Column(name = "created_by",length = 50)
+    private String createdBy;
+
+//    @UpdateTimestamp
+    @LastModifiedDate
     @Column(name = "modified_on")
     private LocalDateTime modifiedOn;
+
+    @LastModifiedBy
+    @Column(name = "modified_by", length = 50)
+    private String modifiedBy;
 }

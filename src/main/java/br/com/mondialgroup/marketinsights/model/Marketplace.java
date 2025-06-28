@@ -5,8 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "marketplace")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,5 +32,23 @@ public class Marketplace {
 
     @Column(name = "abbreviation", length = 6)
     private String abbreviation;
+
+//    @CreationTimestamp
+    @CreatedDate
+    @Column(name = "created_on")
+    private LocalDateTime createdOn;
+
+    @CreatedBy
+    @Column(name = "created_by",length = 50)
+    private String createdBy;
+
+//    @UpdateTimestamp
+    @LastModifiedDate
+    @Column(name = "modified_on")
+    private LocalDateTime modifiedOn;
+
+    @LastModifiedBy
+    @Column(name = "modified_by", length = 50)
+    private String modifiedBy;
 
 }
