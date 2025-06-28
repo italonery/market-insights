@@ -3,11 +3,10 @@ spring:
     name: marketinsights
 
   datasource:
-    url: jdbc:h2:file:./data/marketinsightsdb
-#    url: jdbc:h2:mem:testdb
+    url: ${DATABASE_URL}
     driver-class-name: org.h2.Driver
-    username: admin
-    password: admin
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
 
   jpa:
     hibernate:
@@ -22,3 +21,7 @@ spring:
     enable: true
     locations: classpath:db/migration
     baseline-on-migrate: true
+
+marketinsights:
+  security:
+    secret: ${SECRET}
