@@ -1,10 +1,12 @@
 package br.com.mondialgroup.marketinsights.controller;
 
+import br.com.mondialgroup.marketinsights.dto.request.ProductListRequest;
 import br.com.mondialgroup.marketinsights.dto.request.ProductRequest;
 import br.com.mondialgroup.marketinsights.dto.response.ProductResponse;
 import br.com.mondialgroup.marketinsights.mapper.ProductMapper;
 import br.com.mondialgroup.marketinsights.model.Product;
 import br.com.mondialgroup.marketinsights.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +22,21 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    public ResponseEntity<ProductResponse> saveProduct(@RequestBody ProductRequest request) {
+    public ResponseEntity<ProductResponse> saveProduct(@Valid @RequestBody ProductRequest request) {
         Product newProduct = ProductMapper.toProduct(request);
         Product savedProduct = productService.save(newProduct);
         return ResponseEntity.status(HttpStatus.CREATED).body(ProductMapper.toProductResponse(savedProduct));
+    }
+
+    @PostMapping("/batch")
+    public ResponseEntity<List<ProductResponse>> saveAllProducts(@Valid @RequestBody ProductListRequest request) {
+        List<Product> products = request.products().stream()
+                .map(ProductMapper::toProduct)
+                .toList();
+        List<ProductResponse> newProducts = productService.saveAll(products).stream()
+                .map(ProductMapper::toProductResponse)
+                .toList();
+        return ResponseEntity.status(HttpStatus.CREATED).body(newProducts);
     }
 
     @GetMapping
@@ -66,6 +79,16 @@ public class ProductController {
         return productService.update(id, ProductMapper.toProduct(request))
                 .map(product -> ResponseEntity.ok(ProductMapper.toProductResponse(product)))
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        Product product = productService.findById(id).orElse(null);
+        if (product != null) {
+            productService.delete(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }
