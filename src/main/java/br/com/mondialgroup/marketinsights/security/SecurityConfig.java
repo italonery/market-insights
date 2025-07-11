@@ -33,6 +33,8 @@ public class SecurityConfig {
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/api-docs/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/swagger/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll() // h2-console
                         .anyRequest().authenticated()
                 )
